@@ -1,0 +1,22 @@
+{
+    "EN": {
+        "Choose language": "Choose language",
+        "Language had been changed": "Language had been changed",
+        "Language set to Ukrainian!": "Language set to Ukrainian!",
+        "Language set to English!": "Language set to English!",
+        "That's not a link.": "That's not a link.",
+        "This link is not supported.": "This link is not supported.",
+        "Sorry, couldn't send the video. Error: {}": "Sorry, couldn't send the video. Error: {}",
+        "Sorry, couldn't fetch the video.": "Sorry, couldn't fetch the video."
+    },
+    "UA": {
+        "Choose language": "Оберіть мову",
+        "Language had been changed": "Мову змінено",
+        "Language set to Ukrainian!": "Встановлено українську мову!",
+        "Language set to English!": "Встановлено англійську мову!",
+        "That's not a link.": "Це не посилання.",
+        "This link is not supported.": "Це посилання не підтримується.",
+        "Sorry, couldn't send the video. Error: {}": "Вибачте, не вдалося надіслати відео. Помилка: {}",
+        "Sorry, couldn't fetch the video.": "Вибачте, не вдалося завантажити відео."
+    }
+}
