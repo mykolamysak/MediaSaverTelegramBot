@@ -29,8 +29,15 @@ class ChatHandler:
         dp.callback_query.register(self.set_lang_en_callback, F.data == 'lang_en')
 
     async def start_command(self, message: types.Message):
-        if not self.db.user_exists(message.from_user.id):
-            self.db.add_user(message.from_user.id, 'EN')
+        user_id = message.from_user.id
+        username = message.from_user.username
+        chat_id = message.chat.id
+
+        if not self.db.user_exists(user_id):
+            self.db.add_user(user_id, 'EN', username, chat_id)
+        else:
+            self.db.update_user_info(user_id, username, chat_id)
+
         await message.answer(self.trnsl.translate('Send me the link and I will send you the video in the chat ', await lang(message)) + '🔗👇')
 
 
@@ -62,24 +69,38 @@ class ChatHandler:
         )
 
     async def set_lang_ua_callback(self, callback: types.CallbackQuery):
-        await self.bot.delete_message(callback.from_user.id, callback.message.message_id)
-        if not self.db.user_exists(callback.from_user.id):
-            self.db.add_user(callback.from_user.id, 'UA')
+        user_id = callback.from_user.id
+        username = callback.from_user.username
+        chat_id = callback.message.chat.id
+
+        await self.bot.delete_message(user_id, callback.message.message_id)
+
+        if not self.db.user_exists(user_id):
+            self.db.add_user(user_id, 'UA', username, chat_id)
         else:
-            self.db.update_lang(callback.from_user.id, 'UA')
+            self.db.update_lang(user_id, 'UA')
+            self.db.update_user_info(user_id, username, chat_id)
+
         await self.bot.send_message(
-            callback.from_user.id,
+            user_id,
             self.trnsl.translate('Вибрано українську мову! ', 'UA') + '🇺🇦'
         )
 
     async def set_lang_en_callback(self, callback: types.CallbackQuery):
-        await self.bot.delete_message(callback.from_user.id, callback.message.message_id)
-        if not self.db.user_exists(callback.from_user.id):
-            self.db.add_user(callback.from_user.id, 'EN')
+        user_id = callback.from_user.id
+        username = callback.from_user.username
+        chat_id = callback.message.chat.id
+
+        await self.bot.delete_message(user_id, callback.message.message_id)
+
+        if not self.db.user_exists(user_id):
+            self.db.add_user(user_id, 'EN', username, chat_id)
         else:
-            self.db.update_lang(callback.from_user.id, 'EN')
+            self.db.update_lang(user_id, 'EN')
+            self.db.update_user_info(user_id, username, chat_id)
+
         await self.bot.send_message(
-            callback.from_user.id,
+            user_id,
             self.trnsl.translate('Language set to English! ', 'EN') + '🇬🇧'
         )
 

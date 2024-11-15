@@ -1,6 +1,6 @@
 CONFIG_FILE = 'config.ini'
 
-DB_SECTION = 'data/database.db'
+DB_SECTION = 'data/usersDB.db'
 
 TRANSLATIONS = 'data/translations.json'
 
