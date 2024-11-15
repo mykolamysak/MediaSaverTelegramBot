@@ -1,40 +1,64 @@
-import yt_dlp
 from aiogram import types, Dispatcher, F
-from src.json_handler import JsonHandler
+
 from src.db_handler import Database
+from src.json_handler import JsonHandler
+from src.video_handler import VideoHandler
+from settings.settings import DB_SECTION, BOT_URL_START, BOT_URL_ADD_TO_GROUP_CHAT
 from settings import markups as nav
-from settings.settings import BOT_URL_START, DB_SECTION
+from settings.lang import lang
 
 class ChatHandler:
     def __init__(self, bot, dp: Dispatcher):
         self.bot = bot
         self.db = Database(DB_SECTION)
         self.trnsl = JsonHandler()
+        self.video_handler = VideoHandler()
 
         self.button_bot_link = types.InlineKeyboardButton(text='🤖 MediaSaver', url=BOT_URL_START)
-        self.inline_kb1 = types.InlineKeyboardMarkup(inline_keyboard=[[self.button_bot_link]])
+        self.button_add_bot_to_group_chat = types.InlineKeyboardButton(text='👥 Add to chat', url=BOT_URL_ADD_TO_GROUP_CHAT)
+        self.inline_welcome = types.InlineKeyboardMarkup(inline_keyboard=[[self.button_bot_link]])
+        self.inline_add_to_group_chat = types.InlineKeyboardMarkup(inline_keyboard=[[self.button_add_bot_to_group_chat]])
 
         dp.message.register(self.start_command, F.text == '/start')
+        dp.message.register(self.info_command, F.text == '/info')
         dp.message.register(self.language_command, F.text == '/language')
+        dp.message.register(self.add_to_group_chat_command, F.text == '/add')
         dp.message.register(self.handle_message, F.text)
+
         dp.callback_query.register(self.set_lang_ua_callback, F.data == 'lang_ua')
         dp.callback_query.register(self.set_lang_en_callback, F.data == 'lang_en')
 
     async def start_command(self, message: types.Message):
         if not self.db.user_exists(message.from_user.id):
-            await self.bot.send_message(
-                message.from_user.id,
-                self.trnsl.translate('Choose language'),
-                reply_markup=nav.langMenu
-            )
-        else:
-            await self.send_welcome_message(message)
+            self.db.add_user(message.from_user.id, 'EN')
+        await message.answer(self.trnsl.translate('Send me the link and I will send you the video in the chat ', await lang(message)) + '🔗👇')
+
+
+    async def info_command(self, message: types.Message):
+        await self.bot.send_message(
+            message.from_user.id,
+            self.trnsl.translate('🤖 MediaSaver is a bot for downloading videos from YouTube, Instagram, and TikTok.\n\n'
+                                 'Just choose your preferred language (🇺🇦/🇬🇧) and send a link to the video you want to save.\n'
+                                 'I support links from youtube.com, youtu.be, instagram.com, tiktok.com, and vm.tiktok.com.\n\n'
+                                 'For a successful upload, make sure the video is public, send only one link at a time, '
+                                 'and wait a few seconds for processing.\n\n'
+                                 'Share the bot with your friends:\n@uamediasaver_bot',
+                                 await lang(message)), reply_markup=self.inline_welcome
+        )
 
     async def language_command(self, message: types.Message):
         await self.bot.send_message(
             message.from_user.id,
-            self.trnsl.translate('Choose language'),
+            self.trnsl.translate('Choose the language ', await lang(message)) +'🌍',
             reply_markup=nav.langMenu
+        )
+
+    async def add_to_group_chat_command(self, message: types.Message):
+        await self.bot.send_message(
+            message.from_user.id,
+            self.trnsl.translate(
+                'To add the bot to your group chat press button below and select the chat from the list ', await lang(message)) + '⬇',
+            reply_markup=self.inline_add_to_group_chat
         )
 
     async def set_lang_ua_callback(self, callback: types.CallbackQuery):
@@ -45,7 +69,7 @@ class ChatHandler:
             self.db.update_lang(callback.from_user.id, 'UA')
         await self.bot.send_message(
             callback.from_user.id,
-            self.trnsl.translate('Language set to Ukrainian!', 'UA')
+            self.trnsl.translate('Вибрано українську мову! ', 'UA') + '🇺🇦'
         )
 
     async def set_lang_en_callback(self, callback: types.CallbackQuery):
@@ -56,65 +80,8 @@ class ChatHandler:
             self.db.update_lang(callback.from_user.id, 'EN')
         await self.bot.send_message(
             callback.from_user.id,
-            self.trnsl.translate('Language set to English!', 'EN')
+            self.trnsl.translate('Language set to English! ', 'EN') + '🇬🇧'
         )
 
     async def handle_message(self, message: types.Message):
-        lang = self.db.get_lang(message.from_user.id)
-        url = str(message.text).strip()
-
-        if not (url.startswith("http://") or url.startswith("https://")):
-            await message.reply(self.trnsl.translate("That's not a link.", lang))
-            return
-
-        if not F.text.regexp(r'^https:\/\/('
-                             r'www\.youtube.*|youtu\.be.*|youtube\.com.*|'
-                             r'www\.instagram\.com.*|instagram\.com.*|'
-                             r'www\.tiktok\.com.*|vm\.tiktok\.com.*)').match(url):
-            await message.reply(self.trnsl.translate("This link is not supported.", lang))
-            return
-
-        direct_link = self.get_direct_link(url)
-
-        if direct_link:
-            try:
-                await self.bot.send_video(
-                    chat_id=message.chat.id,
-                    video=direct_link,
-                    reply_markup=self.inline_kb1
-                )
-            except Exception as e:
-                await message.answer(self.trnsl.translate("Sorry, couldn't send the video. Error: {}", lang).format(str(e)))
-        else:
-            await message.answer(self.trnsl.translate("Sorry, couldn't fetch the video.", lang))
-
-    def get_direct_link(self, video_url):
-        ydl_options = {
-            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-            'quiet': True,
-            'no_warnings': True,
-            'outtmpl': '%(id)s.%(ext)s',
-        }
-
-        with yt_dlp.YoutubeDL(ydl_options) as ydl:
-            info_dict = ydl.extract_info(video_url, download=False)
-
-        formats = info_dict.get('formats', [])
-        for fmt in formats:
-            if fmt.get('ext') == 'mp4' and fmt.get('acodec') != 'none' and fmt.get('vcodec') != 'none':
-                return fmt['url']
-
-        if 'url' in info_dict:
-            return info_dict['url']
-        return
-
-    async def send_welcome_message(self, message: types.Message):
-        await message.answer(
-            'Hi!👋\nSend me the link and I will help you to get the video.\n\n'
-            'Advantages of MediaSaver:\n'
-            '📺 Returns video in .mp4 format;\n'
-            '🚫 No ads;\n'
-            '🤖 Open source;\n\n'
-            '👨‍💻 Contacts: @hglrev',
-            reply_markup=self.inline_kb1
-        )
+        await self.video_handler.send_video_if_link(self.bot, message, self.trnsl, self.inline_welcome)

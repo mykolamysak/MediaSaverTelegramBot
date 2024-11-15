@@ -4,19 +4,29 @@
         "Language had been changed": "Language had been changed",
         "Language set to Ukrainian!": "Language set to Ukrainian!",
         "Language set to English!": "Language set to English!",
-        "That's not a link.": "That's not a link.",
-        "This link is not supported.": "This link is not supported.",
-        "Sorry, couldn't send the video. Error: {}": "Sorry, couldn't send the video. Error: {}",
-        "Sorry, couldn't fetch the video.": "Sorry, couldn't fetch the video."
+        "That's not a link ": "That's not a link ",
+        "This link is not supported ": "This link is not supported ",
+        "Sorry, couldn't send the video ": "Sorry, couldn't send the video ",
+        "Sorry, couldn't fetch the video ": "Sorry, couldn't fetch the video.",
+        "Send me the link and I will send you the video in the chat ": "Send me the link and I will send you the video in the chat ",
+        "To add the bot to your group chat press button below and select the chat from the list ": "To add the bot to your group chat press button below and select the chat from the list ",
+        "Choose the language ": "Choose the language ",
+        "🤖 MediaSaver is a bot for downloading videos from YouTube, Instagram, and TikTok.\n\nJust choose your preferred language (🇺🇦/🇬🇧) and send a link to the video you want to save.\nI support links from youtube.com, youtu.be, instagram.com, tiktok.com, and vm.tiktok.com.\n\nFor a successful upload, make sure the video is public, send only one link at a time, and wait a few seconds for processing.\n\nShare the bot with your friends:\n@uamediasaver_bot": "🤖 MediaSaver is a bot for downloading videos from YouTube, Instagram, and TikTok.\n\nJust choose your preferred language (🇺🇦/🇬🇧) and send a link to the video you want to save.\nI support links from youtube.com, youtu.be, instagram.com, tiktok.com, and vm.tiktok.com.\n\nFor a successful upload, make sure the video is public, send only one link at a time, and wait a few seconds for processing.\n\nShare the bot with your friends:\n@uamediasaver_bot"
+
     },
     "UA": {
         "Choose language": "Оберіть мову",
         "Language had been changed": "Мову змінено",
         "Language set to Ukrainian!": "Встановлено українську мову!",
         "Language set to English!": "Встановлено англійську мову!",
-        "That's not a link.": "Це не посилання.",
-        "This link is not supported.": "Це посилання не підтримується.",
-        "Sorry, couldn't send the video. Error: {}": "Вибачте, не вдалося надіслати відео. Помилка: {}",
-        "Sorry, couldn't fetch the video.": "Вибачте, не вдалося завантажити відео."
+        "That's not a link ": "Це не посилання ",
+        "This link is not supported ": "Це посилання не підтримується ",
+        "Sorry, couldn't send the video ": "Вибачте, не вдалося надіслати відео ",
+        "Sorry, couldn't fetch the video ": "Вибачте, не вдалося завантажити відео ",
+        "Send me the link and I will send you the video in the chat ": "Надішліть мені посилання і я надішлю вам відео в чат ",
+        "To add the bot to your group chat press button below and select the chat from the list ": "Щоб додати бота до вашого групового чату, натисніть кнопку нижче і виберіть чат зі списку ",
+        "Choose the language ": "Виберіть мову ",
+        "🤖 MediaSaver is a bot for downloading videos from YouTube, Instagram, and TikTok.\n\nJust choose your preferred language (🇺🇦/🇬🇧) and send a link to the video you want to save.\nI support links from youtube.com, youtu.be, instagram.com, tiktok.com, and vm.tiktok.com.\n\nFor a successful upload, make sure the video is public, send only one link at a time, and wait a few seconds for processing.\n\nShare the bot with your friends:\n@uamediasaver_bot": "\uD83E\uDD16 MediaSaver - це бот для завантаження відео з YouTube, Instagram та TikTok.\n\nПросто оберіть бажану мову (\uD83C\uDDFA\uD83C\uDDE6/\uD83C\uDDEC\uD83C\uDDE7) та надішліть посилання на відео, яке хочете зберегти.\nПідтримую посилання з youtube.com, youtu. be, instagram.com, tiktok.com і vm.tiktok.com.\n\nДля успішного завантаження переконайтеся, що відео є загальнодоступним, надсилайте лише одне посилання за раз і зачекайте кілька секунд на обробку.\n\nПоділіться ботом з друзями:\n@uamediasaver_bot"
+
     }
 }
