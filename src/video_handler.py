@@ -65,6 +65,14 @@ class VideoHandler:
         return None
 
     async def send_video_if_link(self, bot, message: types.Message, trnsl, inline_kb):
+        if message.chat.type != 'private':
+            url = message.text.strip()
+            if not (url.startswith("http://") or url.startswith("https://")):
+                return
+
+            if not self.is_supported_link(url):
+                return
+
         url = message.text.strip()
 
         if not (url.startswith("http://") or url.startswith("https://")):
@@ -79,6 +87,9 @@ class VideoHandler:
 
         if video_info and video_info['url']:
             try:
+                if video_info['size'] and video_info['size'] > 50:
+                    await message.reply(trnsl.translate("The bot cannot process videos that are more than 50 MB ",
+                                                        await lang(message)) + '🤐')
                 duration_minutes, duration_seconds = divmod(int(video_info['duration']), 60)
 
                 size_text = f"{video_info['size']:.2f} MB" if video_info['size'] is not None else ""
@@ -110,3 +121,4 @@ class VideoHandler:
                 await message.reply(trnsl.translate("Sorry, couldn't send the video ", await lang(message)) + '😓')
         else:
             await message.reply(trnsl.translate("Sorry, couldn't fetch the video ", await lang(message)) + '😓')
+

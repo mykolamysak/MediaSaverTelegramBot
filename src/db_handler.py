@@ -16,7 +16,11 @@ class Database:
 
     def get_lang(self, user_id):
         with self.connection:
-            return self.cursor.execute('SELECT lang FROM users WHERE user_id = ?', (user_id,)).fetchone()[0]
+            result = self.cursor.execute('SELECT lang FROM users WHERE user_id = ?', (user_id,)).fetchone()
+            if result is None:
+                self.add_user(user_id, 'EN')
+                return 'EN' # default lang
+            return result[0]
 
     def update_lang(self, user_id, lang):
         with self.connection:
