@@ -7,7 +7,7 @@ from settings.settings import CONFIG_FILE
 
 config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
-TOKEN = config['pyrogram']['TOKEN'].strip()
+TOKEN = config['Telegram']['TOKEN'].strip()
 
 bot = Bot(TOKEN)
 dp = Dispatcher()
