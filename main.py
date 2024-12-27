@@ -1,11 +1,13 @@
 import configparser
 import asyncio
-from aiogram import Bot, Dispatcher
 import nest_asyncio
+
+from aiogram import Bot, Dispatcher
+
 from src.chat_handler import ChatHandler
 from settings.settings import CONFIG_FILE
 
-config = configparser.ConfigParser()
+config = configparser.ConfigParser()   
 config.read(CONFIG_FILE)
 TOKEN = config['Telegram']['TOKEN'].strip()
 

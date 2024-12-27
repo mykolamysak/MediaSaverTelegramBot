@@ -1,9 +1,10 @@
 import re
+import requests
+import configparser
+
 from yt_dlp import YoutubeDL
 from aiogram import types
 from aiogram.types import URLInputFile
-import requests
-import configparser
 
 from settings.settings import REGULAR_EXPRESSION
 from settings.settings import CONFIG_FILE
