@@ -39,9 +39,10 @@ python main.py
 <details>
   <summary>Demonstration</summary>
 
-  <img src="https://github.com/mykolamysak/MediaSaverTelegramBot/blob/main/media/demo.gif" alt="Demo" />
+  <img src="https://raw.githubusercontent.com/mykolamysak/MediaSaverTelegramBot/main/media/demo.gif" alt="Demo" width="300"/>
   
 </details>
+
 
 
 
