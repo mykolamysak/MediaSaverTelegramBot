@@ -7,11 +7,12 @@ from aiogram import Bot, Dispatcher
 from src.chat_handler import ChatHandler
 from settings.settings import CONFIG_FILE
 
-config = configparser.ConfigParser()   
+config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
 TOKEN = config['Telegram']['TOKEN'].strip()
+PROXY_URL = config['Telegram']['PROXY_URL'].strip()
 
-bot = Bot(TOKEN)
+bot = Bot(token=TOKEN, proxy=PROXY_URL)
 dp = Dispatcher()
 
 chat_handler = ChatHandler(bot, dp)
