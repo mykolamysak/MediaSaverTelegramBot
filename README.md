@@ -38,8 +38,11 @@ python main.py
 - Send a link to the bot and get the video
 <details>
   <summary>Demonstration</summary>
- ![](https://github.com/mykolamysak/MediaSaverTelegramBot/blob/main/media/demo.gif)
+
+  <img src="https://github.com/mykolamysak/MediaSaverTelegramBot/blob/main/media/demo.gif" alt="Demo" />
+  
 </details>
+
 
 
 ## Libraries Used 📁
