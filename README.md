@@ -37,7 +37,7 @@ python main.py
 ## Usage 🎥
 - Send a link to the bot and get the video
 
-![](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdrb2Qyajc0MmV0cjlnNmhpb2Jzc241bmF6dm9tY3hlMm5sMjVpeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/V1puxnUuSebcvlNUqL/giphy.gif)
+![](https://github.com/mykolamysak/MediaSaverTelegramBot/blob/main/media/demo.gif)
 
 ## Libraries Used 📁
 - `aiogram` (~=3.14.0) - A modern and efficient framework for building Telegram bots using Python and asynchronous programming.
